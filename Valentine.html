@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Revati 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<style>
+/* ========================
+   CORE STYLES
+   ======================== */
+* { box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    
+    /* YOUR LOCAL BACKGROUND */
+    background: url("./bg.gif") center center / cover no-repeat fixed;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end; 
+    padding-bottom: 5vh; 
+}
+
+/* LOADING SCREEN STYLES */
+#loading-screen {
+    position: fixed;
+    inset: 0;
+    background: #ffb7c5; /* Cute Pink Background */
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease-out;
+}
+
+.heart-loader {
+    font-size: 50px;
+    animation: beat 0.8s infinite;
+    margin-bottom: 20px;
+}
+
+#loading-text {
+    font-size: 18px;
+    color: #D80032;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#start-btn {
+    display: none; /* Hidden until loaded */
+    padding: 15px 40px;
+    font-size: 20px;
+    background: #D80032;
+    color: white;
+    border: 3px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    animation: pulse 1.5s infinite;
+}
+
+/* OVERLAY */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.1); 
+    pointer-events: none; 
+    z-index: 0;
+}
+
+/* ========================
+   THE CARD
+   ======================== */
+.card {
+    position: relative; 
+    z-index: 100; 
+    
+    /* Frosted Glass */
+    background: rgba(255,255,255,0.4); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 3px solid rgba(255,255,255,0.8);
+    
+    width: 90%;
+    max-width: 500px;
+    min-height: 280px; 
+    border-radius: 20px;
+    padding: 25px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    overflow: hidden; 
+    transition: transform 0.1s; 
+}
+
+.shake { animation: shake 0.5s; }
+
+.cute-img {
+    width: 90px;
+    height: auto;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
+}
+
+/* HIGH VISIBILITY TEXT */
+h1 { 
+    color: #D80032; /* Deep Red */
+    font-size: 24px; 
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+    min-height: 60px; 
+    
+    /* Thick White Outline */
+    text-shadow: 
+        3px 3px 0 #fff,
+        -1px -1px 0 #fff,  
+        1px -1px 0 #fff,
+        -1px 1px 0 #fff,
+        1px 1px 0 #fff;
+    font-weight: 900;
+}
+
+.cursor {
+    display: inline-block;
+    width: 3px;
+    height: 24px;
+    background-color: #D80032;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+}
+
+.btn-container {
+    width: 100%;
+    height: 60px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+button.action-btn {
+    padding: 12px 28px;
+    font-size: 18px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    white-space: nowrap; 
+    box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+    border: 2px solid white; 
+}
+
+#yesBtn { 
+    background: #ff0055; 
+    color: white; 
+    z-index: 10;
+    min-width: 100px;
+}
+
+#noBtn { 
+    background: #FFD700; 
+    color: #D80032;      
+    min-width: 100px;
+    z-index: 50; 
+}
+
+/* RESULT AREA */
+#result {
+    display: none;
+    width: 100%;
+}
+
+.romantic-note {
+    background: rgba(255, 255, 255, 0.9);
+    color: #D80032;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    border: 2px solid #ffb7c5;
+    line-height: 1.5;
+}
+
+#resultText {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ff0055;
+    text-shadow: 2px 2px 0 #fff;
+    margin-bottom: 10px;
+}
+
+#waLink {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 14px; 
+    color: #D80032; 
+    text-decoration: underline;
+    background: rgba(255,255,255,0.9);
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* VIDEO PLAYER */
+#celebrationVideo {
+    width: 100%;
+    max-height: 300px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: none; 
+    background: black;
+    border: 3px solid white;
+}
+
+/* ANIMATIONS */
+.bg-element { position: absolute; pointer-events: none; z-index: 1; }
+@keyframes beat { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+@keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216, 0, 50, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(216, 0, 50, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216, 0, 50, 0); } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes shake { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -2px); } 100% { transform: translate(1px, -2px); } }
+@keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+@keyframes firework { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+
+.firework {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation: firework 1s ease-out forwards;
+    z-index: 150;
+}
+</style>
+</head>
+<body>
+
+<div id="loading-screen">
+    <div class="heart-loader">💖</div>
+    <div id="loading-text">Loading Love...</div>
+    <button id="start-btn">Tap to Open ✨</button>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+    <source src="./Music.m4a" type="audio/mp4">
+</audio>
+
+<video id="preloadVideo" preload="auto" style="display:none;">
+    <source src="./Video.mp4" type="video/mp4">
+</video>
+
+<div class="card" id="card">
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbxxvDUQM/giphy.gif" class="cute-img" alt="cat">
+    
+    <h1 id="question-container"><span id="question"></span><span class="cursor"></span></h1>
+    
+    <div class="btn-container">
+        <button id="yesBtn" class="action-btn">Yes 😍</button>
+        <button id="noBtn" class="action-btn">No 🙈</button>
+    </div>
+
+    <div id="result">
+        <div id="resultText">💖 YAYYYY! 💖</div>
+        
+        <div class="romantic-note">
+            You are my favorite person in the whole world. <br>
+            Thank you for making life so beautiful! 🌹✨
+        </div>
+
+        <video id="celebrationVideo" controls playsinline>
+            <source src="./Video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <a href="#" id="waLink">Click to Send "Yes" on WhatsApp 💌</a>
+    </div>
+</div>
+
+<script>
+/* ========================
+   CONFIG
+   ======================== */
+const yourPhoneNumber = "916296736117"; 
+const mainQuestion = "Revati, will you be my Valentine? 💌";
+const noTexts = [
+    "No 🙈", "Are you sure? 😢", "Really? 💔", "Pookie pls 🥺", 
+    "Last chance! 😭", "I'll cry... ☔️", "Don't do this! 🛑", "Just click Yes! 💖"
+];
+
+/* ========================
+   SELECTORS
+   ======================== */
+const loadingScreen = document.getElementById("loading-screen");
+const loadingText = document.getElementById("loading-text");
+const startBtn = document.getElementById("start-btn");
+const card = document.getElementById("card");
+const questionEl = document.getElementById("question");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const resultEl = document.getElementById("result");
+const cuteImg = document.querySelector(".cute-img");
+const audio = document.getElementById("bgMusic");
+const celebrationVideo = document.getElementById("celebrationVideo");
+const waLink = document.getElementById("waLink");
+
+let scale = 1;
+let tries = 0;
+
+/* ========================
+   LOADING LOGIC
+   ======================== */
+// When window finishes loading (including all files)
+window.onload = () => {
+    loadingText.style.display = "none"; // Hide "Loading..."
+    startBtn.style.display = "block";   // Show "Tap to Open"
+};
+
+// Start Button Click (This guarantees music plays!)
+startBtn.onclick = () => {
+    // 1. Set music to 15 seconds
+    audio.currentTime = 15;
+    
+    // 2. Play music
+    audio.play().then(() => {
+        // 3. Fade out loading screen only if play is successful
+        loadingScreen.style.opacity = "0";
+        setTimeout(() => {
+            loadingScreen.style.display = "none";
+            // 4. Start typing effect
+            typeWriter();
+            startBackgroundEffects();
+        }, 800);
+    }).catch(error => {
+        alert("Please tap again to start music! 🎵");
+    });
+};
+
+/* TYPEWRITER */
+let charIndex = 0;
+function typeWriter() {
+    if (charIndex < mainQuestion.length) {
+        questionEl.innerHTML += mainQuestion.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, 50);
+    } else {
+        document.querySelector(".cursor").style.display = "none";
+    }
+}
+
+/* YES CLICK */
+yesBtn.onclick = () => {
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    document.querySelector("h1").style.display = "none";
+    cuteImg.src = "https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif"; 
+    
+    resultEl.style.display = "block";
+    celebrationVideo.style.display = "block";
+    
+    audio.pause();
+    celebrationVideo.play().catch(e => console.log("Video autoplay prevented"));
+
+    const message = "Hey! I just saw your cute website and... YES! I will be your Valentine! 💖🌹";
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${yourPhoneNumber}&text=${encodeURIComponent(message)}`;
+    waLink.href = whatsappUrl;
+    
+    createFireworks();
+    createFireworks();
+    
+    setTimeout(() => { window.location.href = whatsappUrl; }, 15000);
+};
+
+/* NO CLICK */
+noBtn.onclick = moveNo;
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNo(); });
+
+function moveNo() {
+    card.classList.add("shake");
+    setTimeout(() => card.classList.remove("shake"), 500);
+
+    if (tries < 15) {
+        scale += 0.15; 
+        yesBtn.style.transform = `scale(${scale})`;
+        noBtn.innerHTML = noTexts[tries % noTexts.length];
+        tries++;
+    }
+
+    const cardRect = card.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+    const padding = 20;
+    const maxX = cardRect.width - btnRect.width - padding;
+    const maxY = cardRect.height - btnRect.height - padding;
+    const randomX = Math.max(padding, Math.random() * maxX);
+    const randomY = Math.max(padding, Math.random() * maxY);
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+}
+
+/* EFFECTS */
+function startBackgroundEffects() {
+    setInterval(() => createBgElement("💖"), 400); 
+    setInterval(() => createBgElement("🎈"), 1500); 
+    setInterval(() => createBgElement("❄️"), 1000); 
+    setInterval(() => createBgElement("✨"), 600);  
+}
+
+function createBgElement(char) {
+    const e = document.createElement("div");
+    e.className = "bg-element";
+    e.innerHTML = char;
+    e.style.left = Math.random() * 100 + "vw";
+    e.style.animation = `floatUp ${5 + Math.random() * 5}s linear forwards`;
+    e.style.fontSize = (15 + Math.random() * 20) + "px";
+    document.body.appendChild(e);
+    setTimeout(() => e.remove(), 10000);
+}
+
+function createFireworks() {
+    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+    for(let i=0; i<30; i++) {
+        const p = document.createElement("div");
+        p.className = "firework";
+        p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        p.style.left = "50%";
+        p.style.top = "50%";
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 50 + Math.random() * 100;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+        p.animate([
+            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+            { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
+        ], { duration: 1000, easing: 'ease-out' });
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1000);
+    }
+}
+</script>
+
+</body>
+</html>
