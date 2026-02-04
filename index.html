@@ -25,7 +25,7 @@ body {
     align-items: center;
     justify-content: flex-end; 
     padding-bottom: 5vh; 
-    cursor: url('https://cur.cursors-4u.net/cursors/cur-2/cur116.cur'), auto; /* Cute cursor if on PC */
+    cursor: auto; 
 }
 
 /* LOADING SCREEN */
@@ -104,7 +104,7 @@ body::before {
     cursor: pointer;
     transition: transform 0.1s;
 }
-.cute-img:active { transform: scale(0.8) rotate(-10deg); } /* Bounce effect */
+.cute-img:active { transform: scale(0.8) rotate(-10deg); } 
 
 /* TEXT */
 h1 { 
@@ -127,12 +127,39 @@ button.action-btn {
 #yesBtn { background: #ff0055; color: white; z-index: 10; min-width: 100px; }
 #noBtn { background: #FFD700; color: #D80032; min-width: 100px; z-index: 50; }
 
-/* RESULT & VIDEO */
+/* RESULT AREA */
 #result { display: none; width: 100%; }
-.romantic-note { background: rgba(255, 255, 255, 0.9); color: #D80032; padding: 10px; border-radius: 10px; font-size: 16px; margin-bottom: 15px; font-weight: bold; border: 2px solid #ffb7c5; line-height: 1.5; }
+
+/* Note is now below video */
+.romantic-note { 
+    background: rgba(255, 255, 255, 0.9); 
+    color: #D80032; 
+    padding: 10px; 
+    border-radius: 10px; 
+    font-size: 16px; 
+    margin-top: 15px; /* Margin top because it's now below video */
+    margin-bottom: 15px; 
+    font-weight: bold; 
+    border: 2px solid #ffb7c5; 
+    line-height: 1.5; 
+}
+
 #resultText { font-size: 28px; font-weight: 900; color: #ff0055; text-shadow: 2px 2px 0 #fff; margin-bottom: 10px; }
-#waLink { display: inline-block; margin-top: 15px; font-size: 14px; color: #D80032; text-decoration: underline; background: rgba(255,255,255,0.9); padding: 10px 15px; border-radius: 10px; font-weight: bold; }
-#celebrationVideo { width: 100%; max-height: 300px; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); display: none; background: black; border: 3px solid white; }
+
+#waLink { display: inline-block; margin-top: 10px; font-size: 14px; color: #D80032; text-decoration: underline; background: rgba(255,255,255,0.9); padding: 10px 15px; border-radius: 10px; font-weight: bold; }
+
+/* VIDEO PLAYER - MADE BIGGER */
+#celebrationVideo { 
+    width: 100%; 
+    height: auto; 
+    max-height: 60vh; /* Allowed to take up 60% of screen height */
+    border-radius: 10px; 
+    margin-bottom: 10px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+    display: none; 
+    background: black; 
+    border: 3px solid white; 
+}
 
 /* ANIMATIONS */
 .bg-element { position: absolute; pointer-events: none; z-index: 1; }
@@ -142,19 +169,20 @@ button.action-btn {
 @keyframes shake { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -2px); } 100% { transform: translate(1px, -2px); } }
 @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 @keyframes firework { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
-@keyframes fadeOut { to { opacity: 0; transform: scale(0.5); } }
+@keyframes fadeOut { to { opacity: 0; transform: scale(0.2); } }
 
-/* FAIRY DUST PARTICLES */
+/* BIG & WIDE FAIRY DUST PARTICLES */
 .fairy-particle {
     position: fixed;
-    width: 6px;
-    height: 6px;
+    width: 12px; /* Bigger particles */
+    height: 12px; 
     background: white;
     border-radius: 50%;
-    box-shadow: 0 0 6px #fff, 0 0 10px #ff00de;
+    /* Extra glow */
+    box-shadow: 0 0 15px #fff, 0 0 25px #ff00de, 0 0 35px #00ffff;
     pointer-events: none;
     z-index: 9999;
-    animation: fadeOut 0.8s forwards;
+    animation: fadeOut 1s forwards;
 }
 .firework { position: absolute; width: 10px; height: 10px; border-radius: 50%; animation: firework 1s ease-out forwards; z-index: 150; }
 </style>
@@ -180,7 +208,7 @@ button.action-btn {
 </video>
 
 <div class="card" id="card">
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbxxvDUQM/giphy.gif" 
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbxxvDUQM/giphy.gif" 
          class="cute-img" 
          alt="cat"
          onclick="playMeow()">
@@ -195,15 +223,15 @@ button.action-btn {
     <div id="result">
         <div id="resultText">💖 YAYYYY! 💖</div>
         
-        <div class="romantic-note">
-            You are my favorite person in the whole world. <br>
-            Thank you for making life so beautiful! 🌹✨
-        </div>
-
         <video id="celebrationVideo" controls playsinline>
             <source src="./Video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        
+        <div class="romantic-note">
+            You are my favorite person in the whole world. <br>
+            Thank you for making life so beautiful! 🌹✨
+        </div>
         
         <a href="#" id="waLink">Click to Send "Yes" on WhatsApp 💌</a>
     </div>
@@ -243,45 +271,46 @@ startBtn.onclick = () => {
     });
 };
 
-/* FAIRY BRUSH EFFECT (FOLLOWS MOUSE) */
+/* BIG & WIDE FAIRY DUST EFFECT */
 document.addEventListener("mousemove", (e) => { createFairyDust(e.clientX, e.clientY); });
 document.addEventListener("touchmove", (e) => { 
-    // Touch support for mobile
     const touch = e.touches[0];
     createFairyDust(touch.clientX, touch.clientY); 
 });
 
 function createFairyDust(x, y) {
-    const dust = document.createElement("div");
-    dust.className = "fairy-particle";
-    dust.style.left = x + "px";
-    dust.style.top = y + "px";
-    
-    // Randomize colors slightly
-    const colors = ['#fff', '#ff00de', '#00ffff'];
-    dust.style.background = colors[Math.floor(Math.random() * colors.length)];
-    dust.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${dust.style.background}`;
-    
-    document.body.appendChild(dust);
-    setTimeout(() => { dust.remove(); }, 800);
+    // Create 3 particles per movement for "Wide Brush" effect
+    for(let i=0; i<3; i++) {
+        const dust = document.createElement("div");
+        dust.className = "fairy-particle";
+        
+        // Add random spread to make it wide (Spread of 40px)
+        const spreadX = (Math.random() - 0.5) * 40; 
+        const spreadY = (Math.random() - 0.5) * 40; 
+        
+        dust.style.left = (x + spreadX) + "px";
+        dust.style.top = (y + spreadY) + "px";
+        
+        // Magic colors
+        const colors = ['#fff', '#ff00de', '#00ffff', '#FFD700'];
+        dust.style.background = colors[Math.floor(Math.random() * colors.length)];
+        
+        document.body.appendChild(dust);
+        setTimeout(() => { dust.remove(); }, 1000);
+    }
 }
 
 /* CAT MEOW LOGIC */
 function playMeow() {
-    // 1. Play Sound
-    meowAudio.volume = 0.5; // Not too loud
+    meowAudio.volume = 0.5; 
     meowAudio.currentTime = 0;
     meowAudio.play().catch(e => console.log("Audio play failed"));
-    
-    // 2. Visual Alert (Cute)
     createBurst(cuteImg.getBoundingClientRect().left + 45, cuteImg.getBoundingClientRect().top + 45);
-    
-    // 3. Shake the cat image
     cuteImg.style.transform = "scale(1.2) rotate(10deg)";
     setTimeout(() => { cuteImg.style.transform = "scale(1) rotate(0deg)"; }, 200);
 }
 
-/* MAGIC TOUCH BURST (ON CLICK) */
+/* MAGIC TOUCH BURST */
 document.addEventListener('click', function(e) {
     if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'IMG') {
         createBurst(e.clientX, e.clientY);
@@ -327,11 +356,16 @@ function typeWriter() {
 yesBtn.onclick = () => {
     yesBtn.style.display = "none"; noBtn.style.display = "none"; document.querySelector("h1").style.display = "none";
     cuteImg.src = "https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif"; 
-    resultEl.style.display = "block"; celebrationVideo.style.display = "block";
+    
+    resultEl.style.display = "block"; 
+    celebrationVideo.style.display = "block";
+    
     audio.pause(); celebrationVideo.play();
+    
     const message = "Hey! I just saw your cute website and... YES! I will be your Valentine! 💖🌹";
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${yourPhoneNumber}&text=${encodeURIComponent(message)}`;
     waLink.href = whatsappUrl;
+    
     createFireworks(); createFireworks();
     setTimeout(() => { window.location.href = whatsappUrl; }, 15000);
 };
