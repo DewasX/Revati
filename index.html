@@ -25,9 +25,10 @@ body {
     align-items: center;
     justify-content: flex-end; 
     padding-bottom: 5vh; 
+    cursor: url('https://cur.cursors-4u.net/cursors/cur-2/cur116.cur'), auto; /* Cute cursor if on PC */
 }
 
-/* LOADING SCREEN STYLES */
+/* LOADING SCREEN */
 #loading-screen {
     position: fixed;
     inset: 0;
@@ -40,18 +41,8 @@ body {
     transition: opacity 0.8s ease-out;
 }
 
-.heart-loader {
-    font-size: 50px;
-    animation: beat 0.8s infinite;
-    margin-bottom: 20px;
-}
-
-#loading-text {
-    font-size: 18px;
-    color: #D80032;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
+.heart-loader { font-size: 50px; animation: beat 0.8s infinite; margin-bottom: 20px; }
+#loading-text { font-size: 18px; color: #D80032; font-weight: bold; margin-bottom: 20px; }
 
 #start-btn {
     display: none; 
@@ -83,25 +74,20 @@ body::before {
 .card {
     position: relative; 
     z-index: 100; 
-    
-    /* Frosted Glass */
     background: rgba(255,255,255,0.4); 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 3px solid rgba(255,255,255,0.8);
-    
     width: 90%;
     max-width: 500px;
     min-height: 280px; 
     border-radius: 20px;
     padding: 25px;
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     overflow: hidden; 
     transition: transform 0.1s; 
@@ -109,126 +95,44 @@ body::before {
 
 .shake { animation: shake 0.5s; }
 
+/* CAT STYLES */
 .cute-img {
     width: 90px;
     height: auto;
     margin-bottom: 15px;
     filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
-    cursor: pointer; /* Shows it's clickable */
-    transition: transform 0.2s;
+    cursor: pointer;
+    transition: transform 0.1s;
 }
-.cute-img:active { transform: scale(0.9); }
+.cute-img:active { transform: scale(0.8) rotate(-10deg); } /* Bounce effect */
 
-/* HIGH VISIBILITY TEXT */
+/* TEXT */
 h1 { 
-    color: #D80032; /* Deep Red */
+    color: #D80032; 
     font-size: 24px; 
     margin: 0 0 20px 0;
     line-height: 1.4;
     min-height: 60px; 
-    text-shadow: 
-        3px 3px 0 #fff,
-        -1px -1px 0 #fff,  
-        1px -1px 0 #fff,
-        -1px 1px 0 #fff,
-        1px 1px 0 #fff;
+    text-shadow: 3px 3px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
     font-weight: 900;
 }
+.cursor { display: inline-block; width: 3px; height: 24px; background-color: #D80032; animation: blink 1s infinite; vertical-align: middle; }
 
-.cursor {
-    display: inline-block;
-    width: 3px;
-    height: 24px;
-    background-color: #D80032;
-    animation: blink 1s infinite;
-    vertical-align: middle;
-}
-
-.btn-container {
-    width: 100%;
-    height: 60px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
+/* BUTTONS */
+.btn-container { width: 100%; height: 60px; display: flex; justify-content: center; align-items: center; gap: 20px; }
 button.action-btn {
-    padding: 12px 28px;
-    font-size: 18px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.2s ease;
-    white-space: nowrap; 
-    box-shadow: 0 5px 0 rgba(0,0,0,0.2);
-    border: 2px solid white; 
+    padding: 12px 28px; font-size: 18px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold;
+    transition: all 0.2s ease; white-space: nowrap; box-shadow: 0 5px 0 rgba(0,0,0,0.2); border: 2px solid white; 
 }
+#yesBtn { background: #ff0055; color: white; z-index: 10; min-width: 100px; }
+#noBtn { background: #FFD700; color: #D80032; min-width: 100px; z-index: 50; }
 
-#yesBtn { 
-    background: #ff0055; 
-    color: white; 
-    z-index: 10;
-    min-width: 100px;
-}
-
-#noBtn { 
-    background: #FFD700; 
-    color: #D80032;      
-    min-width: 100px;
-    z-index: 50; 
-}
-
-/* RESULT AREA */
-#result {
-    display: none;
-    width: 100%;
-}
-
-.romantic-note {
-    background: rgba(255, 255, 255, 0.9);
-    color: #D80032;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 16px;
-    margin-bottom: 15px;
-    font-weight: bold;
-    border: 2px solid #ffb7c5;
-    line-height: 1.5;
-}
-
-#resultText {
-    font-size: 28px;
-    font-weight: 900;
-    color: #ff0055;
-    text-shadow: 2px 2px 0 #fff;
-    margin-bottom: 10px;
-}
-
-#waLink {
-    display: inline-block;
-    margin-top: 15px;
-    font-size: 14px; 
-    color: #D80032; 
-    text-decoration: underline;
-    background: rgba(255,255,255,0.9);
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-weight: bold;
-}
-
-/* VIDEO PLAYER */
-#celebrationVideo {
-    width: 100%;
-    max-height: 300px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    display: none; 
-    background: black;
-    border: 3px solid white;
-}
+/* RESULT & VIDEO */
+#result { display: none; width: 100%; }
+.romantic-note { background: rgba(255, 255, 255, 0.9); color: #D80032; padding: 10px; border-radius: 10px; font-size: 16px; margin-bottom: 15px; font-weight: bold; border: 2px solid #ffb7c5; line-height: 1.5; }
+#resultText { font-size: 28px; font-weight: 900; color: #ff0055; text-shadow: 2px 2px 0 #fff; margin-bottom: 10px; }
+#waLink { display: inline-block; margin-top: 15px; font-size: 14px; color: #D80032; text-decoration: underline; background: rgba(255,255,255,0.9); padding: 10px 15px; border-radius: 10px; font-weight: bold; }
+#celebrationVideo { width: 100%; max-height: 300px; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); display: none; background: black; border: 3px solid white; }
 
 /* ANIMATIONS */
 .bg-element { position: absolute; pointer-events: none; z-index: 1; }
@@ -238,15 +142,21 @@ button.action-btn {
 @keyframes shake { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -2px); } 100% { transform: translate(1px, -2px); } }
 @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 @keyframes firework { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+@keyframes fadeOut { to { opacity: 0; transform: scale(0.5); } }
 
-.firework {
-    position: absolute;
-    width: 10px;
-    height: 10px;
+/* FAIRY DUST PARTICLES */
+.fairy-particle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: white;
     border-radius: 50%;
-    animation: firework 1s ease-out forwards;
-    z-index: 150;
+    box-shadow: 0 0 6px #fff, 0 0 10px #ff00de;
+    pointer-events: none;
+    z-index: 9999;
+    animation: fadeOut 0.8s forwards;
 }
+.firework { position: absolute; width: 10px; height: 10px; border-radius: 50%; animation: firework 1s ease-out forwards; z-index: 150; }
 </style>
 </head>
 <body>
@@ -261,15 +171,19 @@ button.action-btn {
     <source src="./Music.m4a" type="audio/mp4">
 </audio>
 
+<audio id="meowSound">
+    <source src="https://www.myinstants.com/media/sounds/meow.mp3" type="audio/mp3">
+</audio>
+
 <video id="preloadVideo" preload="auto" style="display:none;">
     <source src="./Video.mp4" type="video/mp4">
 </video>
 
 <div class="card" id="card">
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbxxvDUQM/giphy.gif" 
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbxxvDUQM/giphy.gif" 
          class="cute-img" 
          alt="cat"
-         onclick="alert('Meow! Say Yes please! 😽')">
+         onclick="playMeow()">
     
     <h1 id="question-container"><span id="question"></span><span class="cursor"></span></h1>
     
@@ -296,19 +210,12 @@ button.action-btn {
 </div>
 
 <script>
-/* ========================
-   CONFIG
-   ======================== */
+/* CONFIG */
 const yourPhoneNumber = "916296736117"; 
 const mainQuestion = "Revati, will you be my Valentine? 💌";
-const noTexts = [
-    "No 🙈", "Are you sure? 😢", "Really? 💔", "Pookie pls 🥺", 
-    "Last chance! 😭", "I'll cry... ☔️", "Don't do this! 🛑", "Just click Yes! 💖"
-];
+const noTexts = ["No 🙈", "Are you sure? 😢", "Really? 💔", "Pookie pls 🥺", "Last chance! 😭", "I'll cry... ☔️", "Don't do this! 🛑", "Just click Yes! 💖"];
 
-/* ========================
-   SELECTORS
-   ======================== */
+/* SELECTORS */
 const loadingScreen = document.getElementById("loading-screen");
 const loadingText = document.getElementById("loading-text");
 const startBtn = document.getElementById("start-btn");
@@ -319,39 +226,63 @@ const noBtn = document.getElementById("noBtn");
 const resultEl = document.getElementById("result");
 const cuteImg = document.querySelector(".cute-img");
 const audio = document.getElementById("bgMusic");
+const meowAudio = document.getElementById("meowSound");
 const celebrationVideo = document.getElementById("celebrationVideo");
 const waLink = document.getElementById("waLink");
 
 let scale = 1;
 let tries = 0;
 
-/* ========================
-   LOADING & MUSIC
-   ======================== */
-window.onload = () => {
-    loadingText.style.display = "none"; 
-    startBtn.style.display = "block";   
-};
-
+/* INIT */
+window.onload = () => { loadingText.style.display = "none"; startBtn.style.display = "block"; };
 startBtn.onclick = () => {
-    audio.currentTime = 15; // Start at 15s
+    audio.currentTime = 15;
     audio.play().then(() => {
         loadingScreen.style.opacity = "0";
-        setTimeout(() => {
-            loadingScreen.style.display = "none";
-            typeWriter();
-            startBackgroundEffects();
-        }, 800);
-    }).catch(error => {
-        alert("Please tap again to start music! 🎵");
+        setTimeout(() => { loadingScreen.style.display = "none"; typeWriter(); startBackgroundEffects(); }, 800);
     });
 };
 
-/* ========================
-   MAGIC TOUCH EFFECT (New!)
-   ======================== */
+/* FAIRY BRUSH EFFECT (FOLLOWS MOUSE) */
+document.addEventListener("mousemove", (e) => { createFairyDust(e.clientX, e.clientY); });
+document.addEventListener("touchmove", (e) => { 
+    // Touch support for mobile
+    const touch = e.touches[0];
+    createFairyDust(touch.clientX, touch.clientY); 
+});
+
+function createFairyDust(x, y) {
+    const dust = document.createElement("div");
+    dust.className = "fairy-particle";
+    dust.style.left = x + "px";
+    dust.style.top = y + "px";
+    
+    // Randomize colors slightly
+    const colors = ['#fff', '#ff00de', '#00ffff'];
+    dust.style.background = colors[Math.floor(Math.random() * colors.length)];
+    dust.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px ${dust.style.background}`;
+    
+    document.body.appendChild(dust);
+    setTimeout(() => { dust.remove(); }, 800);
+}
+
+/* CAT MEOW LOGIC */
+function playMeow() {
+    // 1. Play Sound
+    meowAudio.volume = 0.5; // Not too loud
+    meowAudio.currentTime = 0;
+    meowAudio.play().catch(e => console.log("Audio play failed"));
+    
+    // 2. Visual Alert (Cute)
+    createBurst(cuteImg.getBoundingClientRect().left + 45, cuteImg.getBoundingClientRect().top + 45);
+    
+    // 3. Shake the cat image
+    cuteImg.style.transform = "scale(1.2) rotate(10deg)";
+    setTimeout(() => { cuteImg.style.transform = "scale(1) rotate(0deg)"; }, 200);
+}
+
+/* MAGIC TOUCH BURST (ON CLICK) */
 document.addEventListener('click', function(e) {
-    // Only create burst if not clicking buttons
     if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'IMG') {
         createBurst(e.clientX, e.clientY);
     }
@@ -365,14 +296,11 @@ function createBurst(x, y) {
         heart.style.left = x + 'px';
         heart.style.top = y + 'px';
         heart.style.fontSize = (10 + Math.random() * 20) + 'px';
-        heart.style.pointerEvents = 'none'; // Clicks pass through
+        heart.style.pointerEvents = 'none';
         heart.style.transform = `translate(-50%, -50%)`;
         heart.style.transition = "all 0.8s ease-out";
         heart.style.zIndex = "1000";
-        heart.style.opacity = "1";
         document.body.appendChild(heart);
-
-        // Explode outward
         setTimeout(() => {
             const angle = Math.random() * 360;
             const distance = 60 + Math.random() * 60;
@@ -381,7 +309,6 @@ function createBurst(x, y) {
             heart.style.transform = `translate(${tx}px, ${ty}px) scale(0.5)`;
             heart.style.opacity = "0";
         }, 10);
-
         setTimeout(() => heart.remove(), 800);
     }
 }
@@ -393,103 +320,57 @@ function typeWriter() {
         questionEl.innerHTML += mainQuestion.charAt(charIndex);
         charIndex++;
         setTimeout(typeWriter, 50);
-    } else {
-        document.querySelector(".cursor").style.display = "none";
-    }
+    } else { document.querySelector(".cursor").style.display = "none"; }
 }
 
-/* YES CLICK */
+/* YES BUTTON */
 yesBtn.onclick = () => {
-    yesBtn.style.display = "none";
-    noBtn.style.display = "none";
-    document.querySelector("h1").style.display = "none";
+    yesBtn.style.display = "none"; noBtn.style.display = "none"; document.querySelector("h1").style.display = "none";
     cuteImg.src = "https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif"; 
-    
-    resultEl.style.display = "block";
-    celebrationVideo.style.display = "block";
-    
-    audio.pause();
-    celebrationVideo.play().catch(e => console.log("Video autoplay prevented"));
-
+    resultEl.style.display = "block"; celebrationVideo.style.display = "block";
+    audio.pause(); celebrationVideo.play();
     const message = "Hey! I just saw your cute website and... YES! I will be your Valentine! 💖🌹";
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${yourPhoneNumber}&text=${encodeURIComponent(message)}`;
     waLink.href = whatsappUrl;
-    
-    createFireworks();
-    createFireworks();
-    
+    createFireworks(); createFireworks();
     setTimeout(() => { window.location.href = whatsappUrl; }, 15000);
 };
 
-/* NO CLICK */
+/* NO BUTTON */
 noBtn.onclick = moveNo;
 noBtn.addEventListener("mouseover", moveNo);
 noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNo(); });
-
 function moveNo() {
-    card.classList.add("shake");
-    setTimeout(() => card.classList.remove("shake"), 500);
-
-    if (tries < 15) {
-        scale += 0.15; 
-        yesBtn.style.transform = `scale(${scale})`;
-        noBtn.innerHTML = noTexts[tries % noTexts.length];
-        tries++;
-    }
-
-    const cardRect = card.getBoundingClientRect();
-    const btnRect = noBtn.getBoundingClientRect();
-    const padding = 20;
-    const maxX = cardRect.width - btnRect.width - padding;
-    const maxY = cardRect.height - btnRect.height - padding;
-    const randomX = Math.max(padding, Math.random() * maxX);
-    const randomY = Math.max(padding, Math.random() * maxY);
-
-    noBtn.style.position = "absolute";
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
+    card.classList.add("shake"); setTimeout(() => card.classList.remove("shake"), 500);
+    if (tries < 15) { scale += 0.15; yesBtn.style.transform = `scale(${scale})`; noBtn.innerHTML = noTexts[tries % noTexts.length]; tries++; }
+    const cardRect = card.getBoundingClientRect(); const btnRect = noBtn.getBoundingClientRect();
+    const maxX = cardRect.width - btnRect.width - 20; const maxY = cardRect.height - btnRect.height - 20;
+    noBtn.style.position = "absolute"; noBtn.style.left = Math.max(20, Math.random() * maxX) + "px"; noBtn.style.top = Math.max(20, Math.random() * maxY) + "px";
 }
 
-/* EFFECTS */
+/* BACKGROUND EFFECTS */
 function startBackgroundEffects() {
-    setInterval(() => createBgElement("💖"), 400); 
-    setInterval(() => createBgElement("🎈"), 1500); 
-    setInterval(() => createBgElement("❄️"), 1000); 
-    setInterval(() => createBgElement("✨"), 600);  
+    setInterval(() => createBgElement("💖"), 400); setInterval(() => createBgElement("🎈"), 1500); 
+    setInterval(() => createBgElement("❄️"), 1000); setInterval(() => createBgElement("✨"), 600);  
 }
-
 function createBgElement(char) {
-    const e = document.createElement("div");
-    e.className = "bg-element";
-    e.innerHTML = char;
-    e.style.left = Math.random() * 100 + "vw";
-    e.style.animation = `floatUp ${5 + Math.random() * 5}s linear forwards`;
-    e.style.fontSize = (15 + Math.random() * 20) + "px";
-    document.body.appendChild(e);
+    const e = document.createElement("div"); e.className = "bg-element"; e.innerHTML = char;
+    e.style.left = Math.random() * 100 + "vw"; e.style.animation = `floatUp ${5 + Math.random() * 5}s linear forwards`;
+    e.style.fontSize = (15 + Math.random() * 20) + "px"; document.body.appendChild(e);
     setTimeout(() => e.remove(), 10000);
 }
-
 function createFireworks() {
     const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
     for(let i=0; i<30; i++) {
-        const p = document.createElement("div");
-        p.className = "firework";
+        const p = document.createElement("div"); p.className = "firework";
         p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        p.style.left = "50%";
-        p.style.top = "50%";
-        const angle = Math.random() * Math.PI * 2;
-        const velocity = 50 + Math.random() * 100;
-        const tx = Math.cos(angle) * velocity;
-        const ty = Math.sin(angle) * velocity;
-        p.animate([
-            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-            { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
-        ], { duration: 1000, easing: 'ease-out' });
-        document.body.appendChild(p);
-        setTimeout(() => p.remove(), 1000);
+        p.style.left = "50%"; p.style.top = "50%";
+        const angle = Math.random() * Math.PI * 2; const velocity = 50 + Math.random() * 100;
+        const tx = Math.cos(angle) * velocity; const ty = Math.sin(angle) * velocity;
+        p.animate([{ transform: 'translate(-50%, -50%) scale(1)', opacity: 1 }, { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }], { duration: 1000, easing: 'ease-out' });
+        document.body.appendChild(p); setTimeout(() => p.remove(), 1000);
     }
 }
 </script>
-
 </body>
 </html>
