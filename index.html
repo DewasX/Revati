@@ -89,22 +89,60 @@ body::before {
     align-items: center;
     text-align: center;
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    overflow: hidden; 
+    overflow: visible; /* Allows bubble to float outside */
     transition: transform 0.1s; 
 }
 
 .shake { animation: shake 0.5s; }
 
-/* CAT STYLES */
+/* CAT CONTAINER & BUBBLE */
+.cat-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
 .cute-img {
     width: 90px;
     height: auto;
-    margin-bottom: 15px;
     filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
     cursor: pointer;
     transition: transform 0.1s;
 }
-.cute-img:active { transform: scale(0.8) rotate(-10deg); } 
+.cute-img:active { transform: scale(0.9); }
+
+/* FLOATING SPEECH BUBBLE */
+#speech-bubble {
+    position: absolute;
+    top: -50px; /* Floats above cat */
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: #D80032;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #ff0055;
+    white-space: nowrap;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    opacity: 0; /* Starts hidden, fades in */
+    transition: opacity 0.5s ease-in-out, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 200;
+}
+
+/* Bubble Triangle Pointer */
+#speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0;
+    border-style: solid;
+    border-color: #ff0055 transparent transparent transparent;
+}
 
 /* TEXT */
 h1 { 
@@ -130,14 +168,14 @@ button.action-btn {
 /* RESULT AREA */
 #result { display: none; width: 100%; }
 
-/* Note is now below video */
+/* Note is below video */
 .romantic-note { 
     background: rgba(255, 255, 255, 0.9); 
     color: #D80032; 
     padding: 10px; 
     border-radius: 10px; 
     font-size: 16px; 
-    margin-top: 15px; /* Margin top because it's now below video */
+    margin-top: 15px; 
     margin-bottom: 15px; 
     font-weight: bold; 
     border: 2px solid #ffb7c5; 
@@ -148,11 +186,11 @@ button.action-btn {
 
 #waLink { display: inline-block; margin-top: 10px; font-size: 14px; color: #D80032; text-decoration: underline; background: rgba(255,255,255,0.9); padding: 10px 15px; border-radius: 10px; font-weight: bold; }
 
-/* VIDEO PLAYER - MADE BIGGER */
+/* VIDEO PLAYER */
 #celebrationVideo { 
     width: 100%; 
     height: auto; 
-    max-height: 60vh; /* Allowed to take up 60% of screen height */
+    max-height: 60vh; 
     border-radius: 10px; 
     margin-bottom: 10px; 
     box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
@@ -171,14 +209,13 @@ button.action-btn {
 @keyframes firework { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
 @keyframes fadeOut { to { opacity: 0; transform: scale(0.2); } }
 
-/* BIG & WIDE FAIRY DUST PARTICLES */
+/* BIG FAIRY DUST PARTICLES */
 .fairy-particle {
     position: fixed;
-    width: 12px; /* Bigger particles */
+    width: 12px;
     height: 12px; 
     background: white;
     border-radius: 50%;
-    /* Extra glow */
     box-shadow: 0 0 15px #fff, 0 0 25px #ff00de, 0 0 35px #00ffff;
     pointer-events: none;
     z-index: 9999;
@@ -199,19 +236,18 @@ button.action-btn {
     <source src="./Music.m4a" type="audio/mp4">
 </audio>
 
-<audio id="meowSound">
-    <source src="https://www.myinstants.com/media/sounds/meow.mp3" type="audio/mp3">
-</audio>
-
 <video id="preloadVideo" preload="auto" style="display:none;">
     <source src="./Video.mp4" type="video/mp4">
 </video>
 
 <div class="card" id="card">
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbxxvDUQM/giphy.gif" 
-         class="cute-img" 
-         alt="cat"
-         onclick="playMeow()">
+    
+    <div class="cat-wrapper">
+        <div id="speech-bubble">Say Yes! 😽</div>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4aG55bTN0bWF4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbxxvDUQM/giphy.gif" 
+             class="cute-img" 
+             alt="cat">
+    </div>
     
     <h1 id="question-container"><span id="question"></span><span class="cursor"></span></h1>
     
@@ -254,9 +290,9 @@ const noBtn = document.getElementById("noBtn");
 const resultEl = document.getElementById("result");
 const cuteImg = document.querySelector(".cute-img");
 const audio = document.getElementById("bgMusic");
-const meowAudio = document.getElementById("meowSound");
 const celebrationVideo = document.getElementById("celebrationVideo");
 const waLink = document.getElementById("waLink");
+const speechBubble = document.getElementById("speech-bubble");
 
 let scale = 1;
 let tries = 0;
@@ -267,11 +303,42 @@ startBtn.onclick = () => {
     audio.currentTime = 15;
     audio.play().then(() => {
         loadingScreen.style.opacity = "0";
-        setTimeout(() => { loadingScreen.style.display = "none"; typeWriter(); startBackgroundEffects(); }, 800);
+        setTimeout(() => { 
+            loadingScreen.style.display = "none"; 
+            typeWriter(); 
+            startBackgroundEffects(); 
+            startCatTalk(); // Start the cat talking logic
+        }, 800);
     });
 };
 
-/* BIG & WIDE FAIRY DUST EFFECT */
+/* AUTO TALKING CAT LOGIC */
+const catPhrases = [
+    "Say Yes! 😽", 
+    "I'll be the best! 💖", 
+    "Please? 🥺", 
+    "Click the pink button! 👇",
+    "I love you! 🌹"
+];
+let phraseIndex = 0;
+
+function startCatTalk() {
+    // Show first phrase
+    speechBubble.style.opacity = 1;
+    
+    // Change phrase every 3 seconds
+    setInterval(() => {
+        speechBubble.style.opacity = 0; // Fade out
+        setTimeout(() => {
+            // Change text while hidden
+            phraseIndex = (phraseIndex + 1) % catPhrases.length;
+            speechBubble.innerText = catPhrases[phraseIndex];
+            speechBubble.style.opacity = 1; // Fade in
+        }, 500);
+    }, 3000);
+}
+
+/* BIG FAIRY DUST EFFECT */
 document.addEventListener("mousemove", (e) => { createFairyDust(e.clientX, e.clientY); });
 document.addEventListener("touchmove", (e) => { 
     const touch = e.touches[0];
@@ -279,35 +346,18 @@ document.addEventListener("touchmove", (e) => {
 });
 
 function createFairyDust(x, y) {
-    // Create 3 particles per movement for "Wide Brush" effect
     for(let i=0; i<3; i++) {
         const dust = document.createElement("div");
         dust.className = "fairy-particle";
-        
-        // Add random spread to make it wide (Spread of 40px)
         const spreadX = (Math.random() - 0.5) * 40; 
         const spreadY = (Math.random() - 0.5) * 40; 
-        
         dust.style.left = (x + spreadX) + "px";
         dust.style.top = (y + spreadY) + "px";
-        
-        // Magic colors
         const colors = ['#fff', '#ff00de', '#00ffff', '#FFD700'];
         dust.style.background = colors[Math.floor(Math.random() * colors.length)];
-        
         document.body.appendChild(dust);
         setTimeout(() => { dust.remove(); }, 1000);
     }
-}
-
-/* CAT MEOW LOGIC */
-function playMeow() {
-    meowAudio.volume = 0.5; 
-    meowAudio.currentTime = 0;
-    meowAudio.play().catch(e => console.log("Audio play failed"));
-    createBurst(cuteImg.getBoundingClientRect().left + 45, cuteImg.getBoundingClientRect().top + 45);
-    cuteImg.style.transform = "scale(1.2) rotate(10deg)";
-    setTimeout(() => { cuteImg.style.transform = "scale(1) rotate(0deg)"; }, 200);
 }
 
 /* MAGIC TOUCH BURST */
@@ -355,7 +405,9 @@ function typeWriter() {
 /* YES BUTTON */
 yesBtn.onclick = () => {
     yesBtn.style.display = "none"; noBtn.style.display = "none"; document.querySelector("h1").style.display = "none";
-    cuteImg.src = "https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif"; 
+    
+    // Hide cat and bubble on success
+    document.querySelector(".cat-wrapper").style.display = "none"; 
     
     resultEl.style.display = "block"; 
     celebrationVideo.style.display = "block";
@@ -367,7 +419,9 @@ yesBtn.onclick = () => {
     waLink.href = whatsappUrl;
     
     createFireworks(); createFireworks();
-    setTimeout(() => { window.location.href = whatsappUrl; }, 15000);
+    
+    // REDIRECT AFTER 12 SECONDS
+    setTimeout(() => { window.location.href = whatsappUrl; }, 12000);
 };
 
 /* NO BUTTON */
